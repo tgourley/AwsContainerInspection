@@ -1,6 +1,6 @@
 ﻿namespace AwsContainerInspection
 {
-    public class ContainerPortMapping
+    public class AwsContainerPortMapping
     {
         public int ContainerPort { get; set; }
         public int HostPort { get; set; }

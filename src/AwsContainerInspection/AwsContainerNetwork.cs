@@ -3,9 +3,9 @@ using System.Net;
 
 namespace AwsContainerInspection
 {
-    public class ContainerNetwork
+    public class AwsContainerNetwork
     {
         public string NetworkMode { get; set; }
-        public IEnumerable<IPAddress> IPv4Addresses { get; set; }
+        public IEnumerable<string> IPv4Addresses { get; set; }
     }
 }

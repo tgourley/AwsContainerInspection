@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Trey Gourley</Authors>
+    <Company>CircularSoft</Company>
+    <Description>When a conatiner is launched in AWS ECS, if the Amazon ECS container agent is enabled it creates a metadata JSON file with identifying and configuration information.  This will look for that file and pull that information into an object that can be referenced.</Description>
+    <Copyright></Copyright>
+    <RepositoryUrl>https://github.com/tgourley/AwsContainerInspection</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
 
 </Project>
