@@ -2,7 +2,7 @@
   "profiles": {
     "AwsContainerInspectionTestConsole": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\Trey Gourley\\Dropbox\\SVN\\github\\tgourley\\AwsContainerInspection\\test\\ecs-container-metadata.json\""
+      "commandLineArgs": "endpoint \"C:\\Users\\trey.gourley\\Documents\\Development\\misc-projects\\AwsContainerInspection\\test\\ecs-task-metadata-endpoint.json\""
     }
   }
 }

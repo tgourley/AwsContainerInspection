@@ -7,11 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5983471E-8EA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsContainerInspection", "src\AwsContainerInspection\AwsContainerInspection.csproj", "{053B7EA7-FD24-4867-A487-29CEE71351AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwsContainerInspectionTestConsole", "src\AwsContainerInspectionTestConsole\AwsContainerInspectionTestConsole.csproj", "{2B7D6590-C2FC-4165-92EA-153AB4266BFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsContainerInspectionTestConsole", "src\AwsContainerInspectionTestConsole\AwsContainerInspectionTestConsole.csproj", "{2B7D6590-C2FC-4165-92EA-153AB4266BFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0616EA57-9A3C-4782-BBE8-BEA895DA1D42}"
 	ProjectSection(SolutionItems) = preProject
 		test\ecs-container-metadata.json = test\ecs-container-metadata.json
+		test\ecs-task-metadata-endpoint.json = test\ecs-task-metadata-endpoint.json
 	EndProjectSection
 EndProject
 Global

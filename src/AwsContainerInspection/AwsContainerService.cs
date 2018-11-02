@@ -2,12 +2,13 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Net;
 
 namespace AwsContainerInspection
 {
     public static class AwsContainerService
     {
-        public static AwsContainerMetadata GetMetadata()
+        public static AwsContainerFile GetMetadataFromFile()
         {
             try
             {
@@ -29,7 +30,7 @@ namespace AwsContainerInspection
                             {
                                 try
                                 {
-                                    var metadataObject = JsonConvert.DeserializeObject<AwsContainerMetadata>(metadataFileContents);
+                                    var metadataObject = JsonConvert.DeserializeObject<AwsContainerFile>(metadataFileContents);
                                     return metadataObject;
                                 }
                                 catch (Exception ex)
@@ -39,7 +40,47 @@ namespace AwsContainerInspection
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
+            { }
+
+            return null;
+        }
+
+        public static AwsContainerEndpoint GetMetadataFromEndpoint()
+        {
+            try
+            {
+                string endpointUrl = "http://169.254.170.2/v2/metadata";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endpointUrl);
+                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    var metadata = reader.ReadToEnd();
+
+                    return GetMetadataFromEndpoint(metadata);
+                }
+            }
+            catch (Exception)
+            { }
+
+            return null;
+        }
+
+        public static AwsContainerEndpoint GetMetadataFromEndpoint(string metadata)
+        {
+            try
+            {
+                if (IsValidJson(metadata))
+                {
+                    var metadataObject = JsonConvert.DeserializeObject<AwsContainerEndpoint>(metadata);
+                    return metadataObject;
+                }
+            }
+            catch (Exception)
             { }
 
             return null;

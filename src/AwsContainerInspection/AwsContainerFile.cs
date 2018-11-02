@@ -4,7 +4,7 @@
 
 namespace AwsContainerInspection
 {
-    public class AwsContainerMetadata
+    public class AwsContainerFile
     {
         public string Cluster { get; set; }
         public string ContainerInstanceARN { get; set; }
@@ -20,30 +20,12 @@ namespace AwsContainerInspection
 
         public string GetContainerInstanceGuid()
         {
-            if (!string.IsNullOrWhiteSpace(ContainerInstanceARN))
-            {
-                int start = ContainerInstanceARN.LastIndexOf('/');
-                if (start >= 0 && ContainerInstanceARN.Length > start + 1)
-                {
-                    return ContainerInstanceARN.Substring(start);
-                }
-            }
-
-            return string.Empty;
+            return ContainerInstanceARN.GetGuidFromEndOfArn();
         }
 
         public string GetTaskGuid()
         {
-            if (!string.IsNullOrWhiteSpace(TaskARN))
-            {
-                int start = TaskARN.LastIndexOf('/');
-                if (start >= 0 && TaskARN.Length > start + 1)
-                {
-                    return TaskARN.Substring(start);
-                }
-            }
-
-            return string.Empty;
+            return TaskARN.GetGuidFromEndOfArn();
         }
     }
 }

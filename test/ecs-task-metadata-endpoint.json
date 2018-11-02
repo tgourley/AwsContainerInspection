@@ -1,0 +1,78 @@
+{
+	"Cluster": "arn:aws:ecs:us-east-2:689197386106:cluster/dev-ADEXAppServer",
+	"Containers": [
+		{
+			"CreatedAt": "2018-11-02T06:00:40.755671549Z",
+			"DesiredStatus": "RESOURCES_PROVISIONED",
+			"DockerId": "bd82242ab8f96d27872432fd511eddc37d374d56852e946930462efcc60e1726",
+			"DockerName": "ecs-asc-adex-web-31-internalecspause-a0c0febcb28c83963100",
+			"Image": "fg-proxy:tinyproxy",
+			"ImageID": "",
+			"KnownStatus": "RESOURCES_PROVISIONED",
+			"Labels": {
+				"com.amazonaws.ecs.cluster": "arn:aws:ecs:us-east-2:689197386106:cluster/dev-ADEXAppServer",
+				"com.amazonaws.ecs.container-name": "~internal~ecs~pause",
+				"com.amazonaws.ecs.task-arn": "arn:aws:ecs:us-east-2:689197386106:task/782c512c-4413-4fcc-bf24-8ae62a34adca",
+				"com.amazonaws.ecs.task-definition-family": "asc-adex-web",
+				"com.amazonaws.ecs.task-definition-version": "31"
+			},
+			"Limits": {
+				"CPU": 0,
+				"Memory": 0
+			},
+			"Name": "~internal~ecs~pause",
+			"Networks": [
+				{
+					"IPv4Addresses": [
+						"10.200.11.220"
+					],
+					"NetworkMode": "awsvpc"
+				}
+			],
+			"StartedAt": "2018-11-02T06:00:41.307900893Z",
+			"Type": "CNI_PAUSE"
+		},
+		{
+			"CreatedAt": "2018-11-02T06:02:09.035184374Z",
+			"DesiredStatus": "RUNNING",
+			"DockerId": "1451fb0bdf8803daafaf58aeceb886988f9f0a9c9d53cc638663b9ddadda7720",
+			"DockerName": "ecs-asc-adex-web-31-asc-adex-web-a6afd4fcf693cef09501",
+			"Image": "689197386106.dkr.ecr.us-east-2.amazonaws.com/asc-adex:development",
+			"ImageID": "sha256:7eb3190d0c06006d17a2c5420a7c03217e7c136642ab3f24b60160e7be51581f",
+			"KnownStatus": "RUNNING",
+			"Labels": {
+				"com.amazonaws.ecs.cluster": "arn:aws:ecs:us-east-2:689197386106:cluster/dev-ADEXAppServer",
+				"com.amazonaws.ecs.container-name": "asc-adex-web",
+				"com.amazonaws.ecs.task-arn": "arn:aws:ecs:us-east-2:689197386106:task/782c512c-4413-4fcc-bf24-8ae62a34adca",
+				"com.amazonaws.ecs.task-definition-family": "asc-adex-web",
+				"com.amazonaws.ecs.task-definition-version": "31"
+			},
+			"Limits": {
+				"CPU": 0,
+				"Memory": 0
+			},
+			"Name": "asc-adex-web",
+			"Networks": [
+				{
+					"IPv4Addresses": [
+						"10.200.11.220"
+					],
+					"NetworkMode": "awsvpc"
+				}
+			],
+			"StartedAt": "2018-11-02T06:02:09.667827115Z",
+			"Type": "NORMAL"
+		}
+	],
+	"DesiredStatus": "RUNNING",
+	"Family": "asc-adex-web",
+	"KnownStatus": "RUNNING",
+	"Limits": {
+		"CPU": 1,
+		"Memory": 4096
+	},
+	"PullStartedAt": "2018-11-02T06:00:41.550786016Z",
+	"PullStoppedAt": "2018-11-02T06:02:09.032291194Z",
+	"Revision": "31",
+	"TaskARN": "arn:aws:ecs:us-east-2:689197386106:task/782c512c-4413-4fcc-bf24-8ae62a34adca"
+}
