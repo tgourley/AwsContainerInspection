@@ -2,7 +2,7 @@
 {
     public class AwsContainerLimit
     {
-        public int CPU { get; set; }
-        public int Memory { get; set; }
+        public decimal CPU { get; set; }
+        public decimal Memory { get; set; }
     }
 }

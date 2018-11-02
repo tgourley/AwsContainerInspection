@@ -34,7 +34,11 @@ namespace AwsContainerInspection
                                     return metadataObject;
                                 }
                                 catch (Exception ex)
-                                { }
+                                {
+                                    Console.WriteLine(ex.Message);
+                                    Console.WriteLine(ex.StackTrace);
+                                    throw;
+                                }
                             }
                         }
                     }
@@ -64,8 +68,11 @@ namespace AwsContainerInspection
                     return GetMetadataFromEndpoint(metadata);
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
 
             return null;
         }
@@ -80,8 +87,11 @@ namespace AwsContainerInspection
                     return metadataObject;
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+                Console.WriteLine(Ex.StackTrace);
+            }
 
             return null;
         }
@@ -102,14 +112,15 @@ namespace AwsContainerInspection
                 }
                 catch (JsonReaderException jex)
                 {
-                    //Exception in parsing json
-                    //Console.WriteLine(jex.Message);
-                    return false;
+                    Console.WriteLine(jex.Message);
+                    Console.WriteLine(jex.StackTrace);
+                    throw;
                 }
                 catch (Exception ex) //some other exception
                 {
-                    //Console.WriteLine(ex.ToString());
-                    return false;
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                    throw;
                 }
             }
             else
