@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Common.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -6,8 +7,10 @@ using System.Net;
 
 namespace AwsContainerInspection
 {
-    public static class AwsContainerService
+    public class AwsContainerService
     {
+        private static ILog log = LogManager.GetLogger<AwsContainerService>();
+
         public static AwsContainerFile GetMetadataFromFile()
         {
             try
@@ -35,8 +38,8 @@ namespace AwsContainerInspection
                                 }
                                 catch (Exception ex)
                                 {
-                                    Console.WriteLine(ex.Message);
-                                    Console.WriteLine(ex.StackTrace);
+                                    log.Error(ex.Message);
+                                    log.Error(ex.StackTrace);
                                     throw;
                                 }
                             }
@@ -70,8 +73,8 @@ namespace AwsContainerInspection
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                log.Error(ex.Message);
+                log.Error(ex.StackTrace);
             }
 
             return null;
@@ -89,8 +92,8 @@ namespace AwsContainerInspection
             }
             catch (Exception Ex)
             {
-                Console.WriteLine(Ex.Message);
-                Console.WriteLine(Ex.StackTrace);
+                log.Error(Ex.Message);
+                log.Error(Ex.StackTrace);
             }
 
             return null;
@@ -112,14 +115,14 @@ namespace AwsContainerInspection
                 }
                 catch (JsonReaderException jex)
                 {
-                    Console.WriteLine(jex.Message);
-                    Console.WriteLine(jex.StackTrace);
+                    log.Error(jex.Message);
+                    log.Error(jex.StackTrace);
                     throw;
                 }
                 catch (Exception ex) //some other exception
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    log.Error(ex.Message);
+                    log.Error(ex.StackTrace);
                     throw;
                 }
             }

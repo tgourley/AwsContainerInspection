@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AwsContainerInspection;
+using System;
 using System.IO;
 
 namespace AwsContainerInspectionTestConsole
@@ -36,7 +37,7 @@ namespace AwsContainerInspectionTestConsole
 
                 if (!string.IsNullOrWhiteSpace(metadataFileContents))
                 {
-                    var metadata = AwsContainerInspection.AwsContainerService.GetMetadataFromEndpoint(metadataFileContents);
+                    var metadata = AwsContainerService.GetMetadataFromEndpoint(metadataFileContents);
 
                     if (metadata != null)
                     {
@@ -54,7 +55,7 @@ namespace AwsContainerInspectionTestConsole
         {
             Environment.SetEnvironmentVariable("ECS_CONTAINER_METADATA_FILE", filename);
 
-            var metadata = AwsContainerInspection.AwsContainerService.GetMetadataFromFile();
+            var metadata = AwsContainerService.GetMetadataFromFile();
 
             if (metadata != null)
             {
