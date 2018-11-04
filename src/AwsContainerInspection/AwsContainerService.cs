@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿using AwsContainerInspection.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,7 +9,7 @@ namespace AwsContainerInspection
 {
     public class AwsContainerService
     {
-        private static ILog log = LogManager.GetLogger<AwsContainerService>();
+        private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
         public static AwsContainerFile GetMetadataFromFile()
         {
@@ -38,8 +38,8 @@ namespace AwsContainerInspection
                                 }
                                 catch (Exception ex)
                                 {
-                                    log.Error(ex.Message);
-                                    log.Error(ex.StackTrace);
+                                    Logger.Error(ex.Message);
+                                    Logger.Error(ex.StackTrace);
                                     throw;
                                 }
                             }
@@ -73,8 +73,8 @@ namespace AwsContainerInspection
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message);
-                log.Error(ex.StackTrace);
+                Logger.Error(ex.Message);
+                Logger.Error(ex.StackTrace);
             }
 
             return null;
@@ -92,8 +92,8 @@ namespace AwsContainerInspection
             }
             catch (Exception Ex)
             {
-                log.Error(Ex.Message);
-                log.Error(Ex.StackTrace);
+                Logger.Error(Ex.Message);
+                Logger.Error(Ex.StackTrace);
             }
 
             return null;
@@ -115,14 +115,14 @@ namespace AwsContainerInspection
                 }
                 catch (JsonReaderException jex)
                 {
-                    log.Error(jex.Message);
-                    log.Error(jex.StackTrace);
+                    Logger.Error(jex.Message);
+                    Logger.Error(jex.StackTrace);
                     throw;
                 }
                 catch (Exception ex) //some other exception
                 {
-                    log.Error(ex.Message);
-                    log.Error(ex.StackTrace);
+                    Logger.Error(ex.Message);
+                    Logger.Error(ex.StackTrace);
                     throw;
                 }
             }
