@@ -17,38 +17,34 @@ namespace AwsContainerInspection
             {
                 string metadataFileLocation = Environment.GetEnvironmentVariable("ECS_CONTAINER_METADATA_FILE");
 
-                if (!string.IsNullOrWhiteSpace(metadataFileLocation))
+                if (string.IsNullOrWhiteSpace(metadataFileLocation))
                 {
-                    FileInfo metadataFileInfo = new FileInfo(metadataFileLocation);
+                    return null;
+                }
 
-                    if (metadataFileInfo.Exists)
-                    {
-                        StreamReader metadataFileStream = metadataFileInfo.OpenText();
+                FileInfo metadataFileInfo = new FileInfo(metadataFileLocation);
 
-                        string metadataFileContents = metadataFileStream.ReadToEnd();
+                if (!metadataFileInfo.Exists)
+                {
+                    return null;
+                }
 
-                        if (!string.IsNullOrWhiteSpace(metadataFileContents))
-                        {
-                            if (IsValidJson(metadataFileContents))
-                            {
-                                try
-                                {
-                                    var metadataObject = JsonConvert.DeserializeObject<AwsContainerFile>(metadataFileContents);
-                                    return metadataObject;
-                                }
-                                catch (Exception ex)
-                                {
-                                    Logger.Error(ex.Message);
-                                    Logger.Error(ex.StackTrace);
-                                    throw;
-                                }
-                            }
-                        }
-                    }
+                string metadataFileContents;
+                using (StreamReader metadataFileStream = metadataFileInfo.OpenText())
+                {
+                    metadataFileContents = metadataFileStream.ReadToEnd();
+                }
+
+                if (IsValidJson(metadataFileContents))
+                {
+                    return JsonConvert.DeserializeObject<AwsContainerFile>(metadataFileContents);
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                Logger.Error(ex.StackTrace);
+            }
 
             return null;
         }
@@ -104,32 +100,33 @@ namespace AwsContainerInspection
 
         private static bool IsValidJson(string strInput)
         {
+            if (string.IsNullOrWhiteSpace(strInput))
+            {
+                return false;
+            }
+
             strInput = strInput.Trim();
             if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
                 (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
             {
                 try
                 {
-                    var obj = JToken.Parse(strInput);
+                    JToken.Parse(strInput);
                     return true;
                 }
                 catch (JsonReaderException jex)
                 {
                     Logger.Error(jex.Message);
-                    Logger.Error(jex.StackTrace);
-                    throw;
+                    return false;
                 }
                 catch (Exception ex) //some other exception
                 {
                     Logger.Error(ex.Message);
-                    Logger.Error(ex.StackTrace);
-                    throw;
+                    return false;
                 }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

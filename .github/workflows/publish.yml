@@ -1,0 +1,69 @@
+name: Publish to NuGet
+
+# Publishes AwsContainerInspection to nuget.org using Trusted Publishing (OIDC).
+# No API key secret is used or stored — nuget.org issues a short-lived key at run time.
+#
+# Prerequisites (one-time, on nuget.org): create a Trusted Publishing policy under
+# your username > Trusted Publishing with:
+#   Repository Owner: tgourley
+#   Repository:       AwsContainerInspection
+#   Workflow File:    publish.yml
+# Then add a repository secret NUGET_USER = your nuget.org username (profile name, NOT email).
+
+on:
+  # Publish when you push a version tag, e.g. `git tag v1.0.3 && git push origin v1.0.3`
+  push:
+    tags:
+      - 'v*'
+  # Allow manual runs from the Actions tab (uses the <Version> in the csproj)
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # required for GitHub to issue the OIDC token
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+            echo "override=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "override=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Pack
+        shell: bash
+        run: |
+          ARGS="src/AwsContainerInspection/AwsContainerInspection.csproj -c Release -o artifacts"
+          if [[ "${{ steps.version.outputs.override }}" == "true" ]]; then
+            ARGS="$ARGS -p:Version=${{ steps.version.outputs.value }}"
+          fi
+          dotnet pack $ARGS
+
+      # Request the short-lived key immediately before pushing (it is valid for 1 hour).
+      - name: NuGet login (OIDC -> temporary API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Push to nuget.org
+        run: >-
+          dotnet nuget push artifacts/*.nupkg
+          --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
