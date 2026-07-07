@@ -7,7 +7,7 @@ namespace AwsContainerInspection
         public string CreatedAt { get; set; }
         public string DesiredStatus { get; set; }
         public string DockerId { get; set; }
-        public string ContaineDockerNamerName { get; set; }
+        public string DockerName { get; set; }
         public string Image { get; set; }
         public string ImageID { get; set; }
         public string KnownStatus { get; set; }

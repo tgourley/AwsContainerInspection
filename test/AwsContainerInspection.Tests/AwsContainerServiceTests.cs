@@ -32,6 +32,17 @@ namespace AwsContainerInspection.Tests
         }
 
         [Fact]
+        public void GetMetadataFromEndpoint_ParsesContainerDockerName()
+        {
+            var json = File.ReadAllText(FixturePath("ecs-task-metadata-endpoint.json"));
+
+            var metadata = AwsContainerService.GetMetadataFromEndpoint(json);
+
+            var appContainer = metadata.Containers.Single(c => c.Name == "asc-adex-web");
+            Assert.Equal("ecs-asc-adex-web-31-asc-adex-web-a6afd4fcf693cef09501", appContainer.DockerName);
+        }
+
+        [Fact]
         public void GetMetadataFromEndpoint_ParsesTaskLevelLimits()
         {
             var json = File.ReadAllText(FixturePath("ecs-task-metadata-endpoint.json"));
